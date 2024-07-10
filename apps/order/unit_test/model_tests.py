@@ -1,16 +1,16 @@
 from django.test import TestCase
 
-from apps.order.models import Order
-from apps.product.models import Product
-
 from datetime import date
 from django.utils import timezone
+
+from apps.order.models import Order
+from apps.product.models import Product
 
 
 # CREAZIONI TEST UNITARI PER I MODELS
 class OrdersTestCase(TestCase):
     def setUp(self):
-        # Creazione di istanze di oggetti necessari per i test
+        # Creazione di istanze di oggetti necessari per i unit_test
         self.product1 = Product.objects.create(name='Product 1', price=100)
         self.product2 = Product.objects.create(name='Product 2', price=50)
         self.order = Order.objects.create(
@@ -39,7 +39,7 @@ class OrdersTestCase(TestCase):
     def test_order_date_default(self):
         # Verifico che la data dell'ordine sia impostata correttamente al valore di default
         new_order = Order.objects.create(name='New Order', description='New description')
-        self.assertEqual(new_order.date, timezone.now().date())
+        self.assertEqual(new_order.date, timezone.now())
 
     def test_order_verbose_name_plural(self):
         # Verifico il verbose name plurale del modello

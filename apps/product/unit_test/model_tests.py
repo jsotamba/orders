@@ -7,7 +7,7 @@ from apps.product.models import Product
 class ProductModelTestCase(TestCase):
 
     def setUp(self):
-        # Creazione di un'istanza per i test
+        # Creazione di un'istanza per i unit_test
         self.product = Product.objects.create(name='Test Product', price=99.99)
 
     def test_product_creation(self):
