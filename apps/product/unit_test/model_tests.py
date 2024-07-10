@@ -9,6 +9,7 @@ class ProductModelTestCase(TestCase):
     def setUp(self):
         # Creazione di un'istanza per i unit_test
         self.product = Product.objects.create(name='Test Product', price=99.99)
+        Product.objects.create(name='Product1', price=10.00)
 
     def test_product_creation(self):
         # Verifico che il prodotto sia stato creato correttamente
@@ -27,3 +28,8 @@ class ProductModelTestCase(TestCase):
         # Verifica l'ordinamento dei prodotti per nome
         products = Product.objects.all()
         self.assertEqual(list(products), list(Product.objects.order_by('name')))
+
+    def test_duplicate_product(self):
+        # verifica di dupplicati
+        with self.assertRaises(Exception):
+            Product.objects.create(name='Product1', price=10.00)

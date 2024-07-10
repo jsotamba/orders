@@ -13,10 +13,14 @@ from utils.messages import get_message_by_code, MessageEnum
 @swagger_auto_schema(methods=['post'], request_body=ProductSerializer)
 @api_view(['GET', 'POST'])
 def product_api_view(request):
+
+    # list
     if request.method == 'GET':
         products = Product.objects.all()
         products_serializer = ProductSerializer(products, many=True)
         return Response(products_serializer.data)
+
+    # create
     if request.method == 'POST':
         product_serializer = ProductSerializer(data=request.data)
         if product_serializer.is_valid():
@@ -25,6 +29,7 @@ def product_api_view(request):
         return Response(product_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+@swagger_auto_schema(methods=['put'], request_body=ProductSerializer)
 @api_view(['GET', 'PUT', 'DELETE'])
 def product_detail_api_view(request, pk):
     product = Product.objects.filter(pk=pk).first()
