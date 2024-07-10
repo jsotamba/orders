@@ -1,19 +1,36 @@
-# Orders
+# Progetto Orders
 
-This is system to monitor and manage daily user orders.
+Benvenuto al progetto Orders.
 
-It is assumed that on the machine where you want to run this application, 
-there is installed docker.
+Si tratta di un sistema per monitorare e gestire gli ordini giornalieri degli utenti.
 
-We assume that for launching all scripts(docker and test), we are in the main root of the project
+## Prerequisiti
+- Prima di avviare l'applicazione in locale, assicurati di avere installato Python sul tuo sistema e di essere all'interno della root principale.
+- Prima di avviare il docker-compose.yml, assicurarsi di avere installato Docker sul sistema.
+
 
 ## Authors
 
 - [@jsotamba](https://github.com/jsotamba)
 
+## Project Structure
+- `orders/`: Directory principale.
+- `docs/`: Contiene la documentazione del progetto.
+- `orders/settings`: Contiene le configurazioni 
+- `apps/`: Contiene le app(`order` e `product`)
+- `apps/<app>/api`: Contiene i serializers, views e ulrs
+- `apps/<app>/unit_test`: Contiene tutti gli unit test
+
+
+## Documentazione
+
+Per maggiori dettagli, consulta: 
+- [Analisi funzionale](docs/Orders_Analisi Funzionale_v1.docx)
+- [Analisi tecnica](docs/Orders_Analisi Tecnica_v1.docx)
+
 ## Running Tests
 
-To run unit tests, run the following command
+Per eseguire i test unitari, eseguire il seguente comando
 
 ```bash
   python manage.py test # all tests
@@ -23,8 +40,18 @@ To run unit tests, run the following command
 
 ## Run project
 
-To run this project 
+### Per eseguire questo progetto in locale effetuare le seguenti operazioni:
+```bash
+   python manage.py makemigrations
+   python manage.py migrate
+   python manage.py createsuperuser
+```
+Alla fine di quest'ultimo comando, avviare il server
+```bash
+   python manage.py runserver 0.0.0.0:8000
+```
 
+### Per eseguire il progetto tramite docker-compose.yml:
 ```bash
   docker-compose up --build
 ```
