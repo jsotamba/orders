@@ -15,5 +15,4 @@ ENV DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE}
 
 RUN chmod +x ./scripts/entrypoint.sh
 
-# Punto di ingresso per il container
 ENTRYPOINT ["./scripts/entrypoint.sh"]

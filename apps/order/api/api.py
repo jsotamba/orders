@@ -5,7 +5,9 @@ from rest_framework.response import Response
 from apps.order.models import Order
 from apps.order.api.serializers import OrderSerializer, OrderCreateUpdateSerializer
 from apps.order.utils.filters import OrderFilter
-from utils.messages import MessageEnum
+from utils.messages import MessageEnum, get_message_by_code
+
+from drf_yasg.utils import swagger_auto_schema
 
 
 @api_view(['GET'])
@@ -18,6 +20,7 @@ def filter_api_view(request):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+@swagger_auto_schema(methods=['post'], request_body=OrderCreateUpdateSerializer)
 @api_view(['GET', 'POST'])
 def order_api_view(request):
 
@@ -32,10 +35,11 @@ def order_api_view(request):
         order_serializer = OrderCreateUpdateSerializer(data=request.data)
         if order_serializer.is_valid():
             order_serializer.save()
-            return Response({"message": MessageEnum.CREATED.value}, status=status.HTTP_201_CREATED)
+            return Response(get_message_by_code(MessageEnum.CREATED), status=status.HTTP_201_CREATED)
         return Response(order_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+@swagger_auto_schema(methods=['put'], request_body=OrderCreateUpdateSerializer)
 @api_view(['GET', 'PUT', 'DELETE'])
 def order_detail_api_view(request, pk=None):
     order = Order.objects.filter(pk=pk).first()
@@ -53,12 +57,12 @@ def order_detail_api_view(request, pk=None):
             order_serializer = OrderCreateUpdateSerializer(order, data=request.data)
             if order_serializer.is_valid():
                 order_serializer.save()
-                return Response({"message": MessageEnum.UPDATED.value}, status=status.HTTP_200_OK)
+                return Response(get_message_by_code(MessageEnum.UPDATED), status=status.HTTP_200_OK)
             return Response(order_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         # delete
         elif request.method == 'DELETE':
             order.delete()
-            return Response({"message": MessageEnum.DELETED.value}, status=status.HTTP_204_NO_CONTENT)
+            return Response(get_message_by_code(MessageEnum.DELETED), status=status.HTTP_204_NO_CONTENT)
     else:
-        return Response({"message": MessageEnum.NOT_FOUND.value}, status=status.HTTP_404_NOT_FOUND)
+        return Response(get_message_by_code(MessageEnum.NOT_FOUND), status=status.HTTP_404_NOT_FOUND)

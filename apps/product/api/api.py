@@ -5,7 +5,10 @@ from rest_framework.response import Response
 from apps.product.models import Product
 from apps.product.api.serializers import ProductSerializer
 
+from drf_yasg.utils import swagger_auto_schema
 
+
+@swagger_auto_schema(methods=['post'], request_body=ProductSerializer)
 @api_view(['GET', 'POST'])
 def product_api_view(request):
     if request.method == 'GET':

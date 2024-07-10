@@ -12,3 +12,7 @@ class MessageEnum(Enum):
     CREATED = "Risorsa creata con successo"
     DELETED = "Risorsa eliminata con successo"
     UPDATED = "Risorsa modificata con successo"
+
+
+def get_message_by_code(enum_member) -> dict:
+    return {"message": enum_member.value}

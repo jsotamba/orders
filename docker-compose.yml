@@ -31,3 +31,6 @@ services:
       - POSTGRES_PASSWORD=postgres
       - DB_HOST=db
       - DB_PORT=5432
+      - DJANGO_SUPERUSER_USERNAME=admin
+      - DJANGO_SUPERUSER_EMAIL=admin@gmail.com
+      - DJANGO_SUPERUSER_PASSWORD=admin
