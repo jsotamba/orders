@@ -16,18 +16,21 @@ class ProductAPITestCase(APITestCase):
         }
         self.product = Product.objects.create(name='Existing Product', price='49.99')
 
+    # verifica lista prodotti
     def test_get_product_list(self):
         url = reverse('product-api')
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
 
+    # verifica creazione prodotto
     def test_create_product(self):
         url = reverse('product-api')
         response = self.client.post(url, self.product_data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Product.objects.count(), 2)
 
+    # verifica validazione campi
     def test_create_product_invalid_data(self):
         invalid_data = {
             'name': 'Invalid Product',
